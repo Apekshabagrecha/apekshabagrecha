@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apeksha Bagrecha | Software Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c3ce0;
+            --primary-light: #7c4dff;
+            --secondary: #e91e8c;
+            --accent: #0891b2;
+            --accent-green: #059669;
+            --accent-orange: #d97706;
+            --dark: #f8f9fc;
+            --dark-card: #ffffff;
+            --dark-surface: #f1f3f8;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --gradient-1: linear-gradient(135deg, #6c3ce0, #f472b6);
+            --gradient-2: linear-gradient(135deg, #06b6d4, #10b981);
+            --gradient-3: linear-gradient(135deg, #f59e0b, #ef4444);
+            --gradient-4: linear-gradient(135deg, #8b5cf6, #06b6d4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ── Animated Background ── */
+        .bg-orbs {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+        }
+        .bg-orbs span {
+            position: absolute; border-radius: 50%; filter: blur(100px); opacity: .12; animation: float 20s infinite ease-in-out;
+        }
+        .bg-orbs span:nth-child(1) { width: 600px; height: 600px; background: var(--primary); top: -10%; left: -5%; }
+        .bg-orbs span:nth-child(2) { width: 500px; height: 500px; background: var(--secondary); top: 40%; right: -8%; animation-delay: -7s; }
+        .bg-orbs span:nth-child(3) { width: 400px; height: 400px; background: var(--accent); bottom: -5%; left: 30%; animation-delay: -14s; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-60px) scale(1.1); }
+        }
+
+        /* ── Navbar ── */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(248, 249, 252, .85); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(108, 60, 224, .12); box-shadow: 0 1px 8px rgba(0,0,0,.06);
+            padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px;
+        }
+        .nav-logo { font-weight: 700; font-size: 1.3rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            color: var(--text-muted); text-decoration: none; font-size: .9rem; font-weight: 500;
+            transition: color .3s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+        .hamburger { display: none; font-size: 1.4rem; color: var(--text); cursor: pointer; background: none; border: none; }
+
+        /* ── Section base ── */
+        section { position: relative; z-index: 1; padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .section-tag {
+            display: inline-block; font-family: 'Fira Code', monospace; font-size: .8rem; font-weight: 500;
+            padding: .3rem .9rem; border-radius: 20px; margin-bottom: 1rem;
+            background: rgba(108, 60, 224, .08); color: var(--primary); border: 1px solid rgba(108, 60, 224, .18);
+        }
+        .section-title {
+            font-size: 2.4rem; font-weight: 700; margin-bottom: .5rem;
+        }
+        .section-title span { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-sub { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 3rem; max-width: 650px; }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; padding-top: 64px;
+        }
+        .hero-content { display: flex; align-items: center; gap: 4rem; width: 100%; flex-wrap: wrap; }
+        .hero-text { flex: 1; min-width: 320px; }
+        .hero-text .greeting { font-size: 1.1rem; color: var(--accent); font-weight: 500; margin-bottom: .5rem; }
+        .hero-text h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.15; margin-bottom: 1rem; }
+        .hero-text h1 .gradient { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-text .tagline { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; }
+        .hero-text .tagline strong { color: var(--text); }
+        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: .5rem;
+            padding: .75rem 1.6rem; border-radius: 50px; font-weight: 600; font-size: .95rem;
+            text-decoration: none; transition: transform .3s, box-shadow .3s; cursor: pointer; border: none;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary { background: var(--gradient-1); color: #fff; box-shadow: 0 4px 20px rgba(108, 60, 224, .4); }
+        .btn-primary:hover { box-shadow: 0 6px 30px rgba(108, 60, 224, .6); }
+        .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-outline:hover { background: rgba(108, 60, 224, .08); }
+
+        .hero-avatar {
+            flex-shrink: 0; width: 300px; height: 300px; border-radius: 50%;
+            background: var(--gradient-1); padding: 5px; box-shadow: 0 0 60px rgba(108, 60, 224, .2);
+            animation: pulse-ring 4s infinite;
+        }
+        .hero-avatar .inner {
+            width: 100%; height: 100%; border-radius: 50%; background: var(--dark-card);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 5rem; font-weight: 800; color: var(--primary);
+        }
+        @keyframes pulse-ring { 0%, 100% { box-shadow: 0 0 40px rgba(108, 60, 224, .15); } 50% { box-shadow: 0 0 80px rgba(108, 60, 224, .25); } }
+
+        .hero-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; }
+        .stat-item h3 { font-size: 1.8rem; font-weight: 700; background: var(--gradient-2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-item p { font-size: .85rem; color: var(--text-muted); }
+
+        /* ── About ── */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+        .about-text p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; font-size: 1rem; }
+        .about-text p strong { color: var(--text); }
+        .info-cards { display: flex; flex-direction: column; gap: 1rem; }
+        .info-card {
+            background: var(--dark-card); border: 1px solid rgba(108, 60, 224, .1); border-radius: 16px;
+            padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 1rem;
+            transition: border-color .3s, transform .3s; box-shadow: 0 2px 12px rgba(0,0,0,.04);
+        }
+        .info-card:hover { border-color: var(--primary); transform: translateX(6px); }
+        .info-card .icon {
+            width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
+        }
+        .info-card:nth-child(1) .icon { background: rgba(108, 60, 224, .15); color: var(--primary-light); }
+        .info-card:nth-child(2) .icon { background: rgba(6, 182, 212, .15); color: var(--accent); }
+        .info-card:nth-child(3) .icon { background: rgba(244, 114, 182, .15); color: var(--secondary); }
+        .info-card:nth-child(4) .icon { background: rgba(16, 185, 129, .15); color: var(--accent-green); }
+        .info-card:nth-child(5) .icon { background: rgba(245, 158, 11, .15); color: var(--accent-orange); }
+        .info-card .info-label { font-size: .75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+        .info-card .info-value { font-size: .95rem; font-weight: 500; }
+
+        /* ── Experience ── */
+        .timeline { position: relative; padding-left: 2.5rem; }
+        .timeline::before {
+            content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent), var(--secondary));
+        }
+        .tl-item { position: relative; margin-bottom: 2.5rem; }
+        .tl-dot {
+            position: absolute; left: -2.5rem; top: 6px; width: 18px; height: 18px;
+            border-radius: 50%; border: 3px solid var(--primary); background: #fff;
+        }
+        .tl-item:nth-child(2) .tl-dot { border-color: var(--accent); }
+        .tl-item:nth-child(3) .tl-dot { border-color: var(--secondary); }
+        .tl-item:nth-child(4) .tl-dot { border-color: var(--accent-green); }
+        .tl-card {
+            background: var(--dark-card); border: 1px solid rgba(108, 60, 224, .1); border-radius: 16px;
+            padding: 1.5rem 2rem; transition: border-color .3s; box-shadow: 0 2px 12px rgba(0,0,0,.04);
+        }
+        .tl-card:hover { border-color: var(--primary); }
+        .tl-header { display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: .5rem; margin-bottom: .8rem; }
+        .tl-role { font-size: 1.15rem; font-weight: 600; }
+        .tl-company { color: var(--primary); font-weight: 500; }
+        .tl-date { font-size: .85rem; color: var(--text-muted); background: rgba(108, 60, 224, .1); padding: .25rem .75rem; border-radius: 20px; white-space: nowrap; }
+        .tl-desc { color: var(--text-muted); font-size: .92rem; line-height: 1.7; }
+        .tl-desc li { margin-bottom: .4rem; }
+        .tl-techs { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+        .tl-tech {
+            font-size: .75rem; padding: .25rem .65rem; border-radius: 6px;
+            background: rgba(6, 182, 212, .1); color: var(--accent); border: 1px solid rgba(6, 182, 212, .2);
+        }
+
+        /* ── Skills ── */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .skill-category {
+            background: var(--dark-card); border: 1px solid rgba(108, 60, 224, .1); border-radius: 16px;
+            padding: 1.8rem; transition: border-color .3s, transform .3s; box-shadow: 0 2px 12px rgba(0,0,0,.04);
+        }
+        .skill-category:hover { border-color: var(--primary); transform: translateY(-4px); }
+        .skill-cat-header { display: flex; align-items: center; gap: .8rem; margin-bottom: 1.2rem; }
+        .skill-cat-icon {
+            width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+        }
+        .skill-cat-name { font-size: 1.05rem; font-weight: 600; }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+        .skill-tag {
+            font-size: .82rem; padding: .35rem .8rem; border-radius: 8px; font-weight: 500;
+            transition: transform .2s, box-shadow .2s; cursor: default;
+        }
+        .skill-tag:hover { transform: scale(1.05); }
+        .cat-lang .skill-cat-icon { background: rgba(108, 60, 224, .1); color: var(--primary); }
+        .cat-lang .skill-tag { background: rgba(108, 60, 224, .08); color: var(--primary); border: 1px solid rgba(108, 60, 224, .2); }
+        .cat-tools .skill-cat-icon { background: rgba(6, 182, 212, .15); color: var(--accent); }
+        .cat-tools .skill-tag { background: rgba(6, 182, 212, .12); color: var(--accent); border: 1px solid rgba(6, 182, 212, .25); }
+        .cat-hw .skill-cat-icon { background: rgba(244, 114, 182, .15); color: var(--secondary); }
+        .cat-hw .skill-tag { background: rgba(244, 114, 182, .12); color: var(--secondary); border: 1px solid rgba(244, 114, 182, .25); }
+        .cat-net .skill-cat-icon { background: rgba(16, 185, 129, .15); color: var(--accent-green); }
+        .cat-net .skill-tag { background: rgba(16, 185, 129, .12); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, .25); }
+        .cat-princ .skill-cat-icon { background: rgba(245, 158, 11, .15); color: var(--accent-orange); }
+        .cat-princ .skill-tag { background: rgba(245, 158, 11, .12); color: var(--accent-orange); border: 1px solid rgba(245, 158, 11, .25); }
+        .cat-soft .skill-cat-icon { background: rgba(239, 68, 68, .15); color: #f87171; }
+        .cat-soft .skill-tag { background: rgba(239, 68, 68, .12); color: #f87171; border: 1px solid rgba(239, 68, 68, .25); }
+
+        /* ── Projects ── */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
+        .project-card {
+            background: var(--dark-card); border: 1px solid rgba(108, 60, 224, .1); border-radius: 16px;
+            padding: 2rem; position: relative; overflow: hidden; transition: border-color .3s, transform .3s;
+            box-shadow: 0 2px 12px rgba(0,0,0,.04);
+        }
+        .project-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .project-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+        }
+        .project-card:nth-child(1)::before { background: var(--gradient-1); }
+        .project-card:nth-child(2)::before { background: var(--gradient-2); }
+        .project-card:nth-child(3)::before { background: var(--gradient-3); }
+        .project-card:nth-child(4)::before { background: var(--gradient-4); }
+        .project-card:nth-child(5)::before { background: linear-gradient(135deg, #f472b6, #f59e0b); }
+        .project-icon {
+            width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; margin-bottom: 1.2rem;
+        }
+        .project-card:nth-child(1) .project-icon { background: rgba(108, 60, 224, .1); color: var(--primary); }
+        .project-card:nth-child(2) .project-icon { background: rgba(6, 182, 212, .15); color: var(--accent); }
+        .project-card:nth-child(3) .project-icon { background: rgba(245, 158, 11, .15); color: var(--accent-orange); }
+        .project-card:nth-child(4) .project-icon { background: rgba(244, 114, 182, .15); color: var(--secondary); }
+        .project-card:nth-child(5) .project-icon { background: rgba(16, 185, 129, .15); color: var(--accent-green); }
+        .project-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: .6rem; }
+        .project-card p { color: var(--text-muted); font-size: .9rem; line-height: 1.65; margin-bottom: 1rem; }
+        .project-techs { display: flex; flex-wrap: wrap; gap: .4rem; }
+        .project-tech {
+            font-size: .72rem; padding: .2rem .55rem; border-radius: 5px;
+            background: rgba(108, 60, 224, .07); color: var(--primary); border: 1px solid rgba(108, 60, 224, .18);
+        }
+
+        /* ── Achievements ── */
+        .achievements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .achievement-card {
+            background: var(--dark-card); border: 1px solid rgba(108, 60, 224, .1); border-radius: 16px;
+            padding: 1.8rem; text-align: center; transition: border-color .3s, transform .3s;
+            box-shadow: 0 2px 12px rgba(0,0,0,.04);
+        }
+        .achievement-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .trophy { font-size: 2.5rem; margin-bottom: 1rem; }
+        .achievement-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: .5rem; }
+        .achievement-card .org { font-size: .85rem; color: var(--primary); font-weight: 500; margin-bottom: .6rem; }
+        .achievement-card p { color: var(--text-muted); font-size: .85rem; line-height: 1.6; }
+
+        /* ── Education ── */
+        .edu-card {
+            background: var(--dark-card); border: 1px solid rgba(108, 60, 224, .1); border-radius: 16px;
+            padding: 2rem 2.5rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+            transition: border-color .3s; box-shadow: 0 2px 12px rgba(0,0,0,.04);
+        }
+        .edu-card:hover { border-color: var(--primary); }
+        .edu-icon {
+            width: 70px; height: 70px; border-radius: 18px; background: rgba(108, 60, 224, .08);
+            display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--primary); flex-shrink: 0;
+        }
+        .edu-info { flex: 1; }
+        .edu-info h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: .25rem; }
+        .edu-info .degree { color: var(--primary); font-weight: 500; margin-bottom: .3rem; }
+        .edu-info .edu-meta { color: var(--text-muted); font-size: .9rem; }
+        .edu-gpa {
+            font-size: 2rem; font-weight: 800; background: var(--gradient-2); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; text-align: center;
+        }
+        .edu-gpa small { display: block; font-size: .7rem; font-weight: 500; -webkit-text-fill-color: #64748b; }
+        .edu-activities { margin-top: 1.5rem; }
+        .edu-activities h4 { font-size: .95rem; font-weight: 600; margin-bottom: .8rem; color: var(--text); }
+        .coursework-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+        .cw-tag {
+            font-size: .8rem; padding: .3rem .75rem; border-radius: 8px;
+            background: rgba(6, 182, 212, .1); color: var(--accent); border: 1px solid rgba(6, 182, 212, .2);
+        }
+
+        /* ── Certifications ── */
+        .cert-list { display: flex; flex-direction: column; gap: 1rem; }
+        .cert-card {
+            background: var(--dark-card); border: 1px solid rgba(108, 60, 224, .1); border-radius: 16px;
+            padding: 1.3rem 1.8rem; display: flex; align-items: center; gap: 1rem; transition: border-color .3s;
+            box-shadow: 0 2px 12px rgba(0,0,0,.04);
+        }
+        .cert-card:hover { border-color: var(--primary); }
+        .cert-badge {
+            width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
+        }
+        .cert-card:nth-child(1) .cert-badge { background: rgba(16, 185, 129, .15); color: var(--accent-green); }
+        .cert-card:nth-child(2) .cert-badge { background: rgba(245, 158, 11, .15); color: var(--accent-orange); }
+        .cert-name { font-weight: 500; font-size: .95rem; }
+        .cert-issuer { font-size: .8rem; color: var(--text-muted); }
+
+        /* ── Languages ── */
+        .lang-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1rem; }
+        .lang-card {
+            background: var(--dark-card); border: 1px solid rgba(108, 60, 224, .1); border-radius: 16px;
+            padding: 1.2rem 2rem; text-align: center; min-width: 140px; transition: border-color .3s, transform .3s;
+            box-shadow: 0 2px 12px rgba(0,0,0,.04);
+        }
+        .lang-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .lang-card .flag { font-size: 2rem; margin-bottom: .4rem; }
+        .lang-card .lang-name { font-weight: 600; font-size: .95rem; }
+
+        /* ── Beyond Code / Hobbies ── */
+        .hobbies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .hobby-card {
+            background: var(--dark-card); border: 1px solid rgba(108, 60, 224, .1); border-radius: 16px;
+            padding: 1.8rem; transition: border-color .3s, transform .3s; box-shadow: 0 2px 12px rgba(0,0,0,.04);
+        }
+        .hobby-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .hobby-card::before {
+            content: ''; display: block; height: 3px; border-radius: 3px 3px 0 0; margin: -1.8rem -1.8rem 1.4rem -1.8rem;
+        }
+        .hobby-card:nth-child(1)::before { background: linear-gradient(135deg, #a78bfa, #f472b6); }
+        .hobby-card:nth-child(2)::before { background: linear-gradient(135deg, #06b6d4, #10b981); }
+        .hobby-card:nth-child(3)::before { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+        .hobby-card:nth-child(4)::before { background: linear-gradient(135deg, #8b5cf6, #06b6d4); }
+        .hobby-icon { font-size: 2.2rem; margin-bottom: .8rem; }
+        .hobby-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: .5rem; }
+        .hobby-card p { color: var(--text-muted); font-size: .88rem; line-height: 1.65; }
+        .hobby-card .hobby-highlights { margin-top: .8rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+        .hobby-highlight {
+            font-size: .72rem; padding: .2rem .6rem; border-radius: 6px; font-weight: 500;
+        }
+        .hobby-card:nth-child(1) .hobby-highlight { background: rgba(167, 139, 250, .1); color: #7c4dff; border: 1px solid rgba(167, 139, 250, .25); }
+        .hobby-card:nth-child(2) .hobby-highlight { background: rgba(6, 182, 212, .1); color: var(--accent); border: 1px solid rgba(6, 182, 212, .25); }
+        .hobby-card:nth-child(3) .hobby-highlight { background: rgba(245, 158, 11, .1); color: var(--accent-orange); border: 1px solid rgba(245, 158, 11, .25); }
+        .hobby-card:nth-child(4) .hobby-highlight { background: rgba(139, 92, 246, .1); color: #7c3aed; border: 1px solid rgba(139, 92, 246, .25); }
+        .hobby-link {
+            display: inline-flex; align-items: center; gap: .4rem; margin-top: .8rem;
+            font-size: .85rem; font-weight: 500; color: var(--primary); text-decoration: none;
+            transition: gap .3s;
+        }
+        .hobby-link:hover { gap: .7rem; }
+
+        /* ── Contact / Footer ── */
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+        .contact-card {
+            background: var(--dark-card); border: 1px solid rgba(108, 60, 224, .1); border-radius: 16px;
+            padding: 1.8rem; text-align: center; transition: border-color .3s, transform .3s;
+            text-decoration: none; color: var(--text); box-shadow: 0 2px 12px rgba(0,0,0,.04);
+        }
+        .contact-card:hover { border-color: var(--primary); transform: translateY(-4px); }
+        .contact-card i { font-size: 1.8rem; margin-bottom: .8rem; }
+        .contact-card:nth-child(1) i { color: var(--primary); }
+        .contact-card:nth-child(2) i { color: var(--accent); }
+        .contact-card:nth-child(3) i { color: var(--secondary); }
+        .contact-card:nth-child(4) i { color: #e1306c; }
+        .contact-card:nth-child(5) i { color: var(--accent-green); }
+        .contact-card h3 { font-size: .95rem; font-weight: 600; margin-bottom: .3rem; }
+        .contact-card p { font-size: .85rem; color: var(--text-muted); }
+
+        footer {
+            text-align: center; padding: 2rem; color: var(--text-muted); font-size: .85rem;
+            border-top: 1px solid rgba(108, 60, 224, .1); position: relative; z-index: 1;
+        }
+        footer span { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; }
+
+        /* ── Scroll animations ── */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            nav { padding: 0 1rem; }
+            .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: rgba(248,249,252,.97); flex-direction: column; padding: 1.5rem; gap: 1rem; border-bottom: 1px solid rgba(108,60,224,.12); box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+            .nav-links.open { display: flex; }
+            .hamburger { display: block; }
+            .hero-text h1 { font-size: 2.2rem; }
+            .hero-avatar { width: 200px; height: 200px; }
+            .hero-avatar .inner { font-size: 3.5rem; }
+            .hero-content { flex-direction: column-reverse; text-align: center; gap: 2rem; }
+            .hero-btns { justify-content: center; }
+            .hero-stats { justify-content: center; }
+            .about-grid { grid-template-columns: 1fr; }
+            section { padding: 4rem 1.2rem; }
+            .section-title { font-size: 1.8rem; }
+            .edu-card { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-orbs"><span></span><span></span><span></span></div>
+
+<!-- ── Navbar ── -->
+<nav>
+    <div class="nav-logo">AB</div>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <i class="fas fa-bars"></i>
+    </button>
+    <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#achievements">Achievements</a></li>
+        <li><a href="#beyond">Beyond Code</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <p class="greeting">Hello, I'm</p>
+            <h1><span class="gradient">Apeksha Bagrecha</span></h1>
+            <p class="tagline">
+                <strong>SDE-2 Software Engineer</strong> at <strong>MathWorks</strong><br>
+                Building powerful tools at the intersection of software and hardware &mdash; from MATLAB apps to instrument control APIs.
+            </p>
+            <div class="hero-btns">
+                <a href="https://www.linkedin.com/in/apeksha-jain-bagrecha" target="_blank" class="btn btn-primary">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="#contact" class="btn btn-outline">
+                    <i class="fas fa-envelope"></i> Get in Touch
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <h3>4+</h3>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat-item">
+                    <h3>9.3</h3>
+                    <p>CGPA</p>
+                </div>
+                <div class="stat-item">
+                    <h3>5+</h3>
+                    <p>Major Projects</p>
+                </div>
+            </div>
+        </div>
+        <div class="hero-avatar">
+            <div class="inner">AB</div>
+        </div>
+    </div>
+</section>
+
+<!-- ── About ── -->
+<section id="about" class="reveal">
+    <span class="section-tag">// about me</span>
+    <h2 class="section-title">Get to Know <span>Me</span></h2>
+    <p class="section-sub">A passionate engineer who thrives at the intersection of software and hardware.</p>
+    <div class="about-grid">
+        <div class="about-text">
+            <p>
+                I'm a <strong>Software Engineer at MathWorks</strong>, currently contributing to the
+                <strong>Instrument Control Toolbox (ICT)</strong> team. My work involves building MATLAB apps and
+                enabling seamless communication with hardware instruments using protocols such as
+                <strong>UDP, TCP/IP, and VISA</strong>.
+            </p>
+            <p>
+                I develop solutions using <strong>C++, MATLAB</strong>, and industry-standard communication protocols
+                to help engineers and researchers interact effectively with their lab and industrial hardware.
+                My technical toolkit includes strong proficiency in <strong>object-oriented programming, design patterns,
+                and SOLID principles</strong> &mdash; skills I use daily to write clean, scalable, and maintainable software.
+            </p>
+            <p>
+                Beyond coding, I'm deeply interested in <strong>leadership and team-building</strong>. I aspire to take
+                on greater responsibilities that allow me to mentor others, influence product direction, and drive
+                collaborative success. I enjoy working in cross-functional teams and believe that clear communication
+                and accountability are key to delivering impactful results.
+            </p>
+        </div>
+        <div class="info-cards">
+            <div class="info-card">
+                <div class="icon"><i class="fas fa-briefcase"></i></div>
+                <div>
+                    <div class="info-label">Role</div>
+                    <div class="info-value">SDE-2 Software Engineer</div>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="icon"><i class="fas fa-building"></i></div>
+                <div>
+                    <div class="info-label">Company</div>
+                    <div class="info-value">MathWorks</div>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div>
+                    <div class="info-label">Location</div>
+                    <div class="info-value">Bengaluru, Karnataka, India</div>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+                <div>
+                    <div class="info-label">Education</div>
+                    <div class="info-value">B.E. in Electronics &amp; Telecommunication</div>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="icon"><i class="fas fa-language"></i></div>
+                <div>
+                    <div class="info-label">Languages</div>
+                    <div class="info-value">English, Hindi, Kannada</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Experience ── -->
+<section id="experience" class="reveal">
+    <span class="section-tag">// experience</span>
+    <h2 class="section-title">Work <span>Experience</span></h2>
+    <p class="section-sub">My professional journey building impactful software at scale.</p>
+    <div class="timeline">
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                <div class="tl-header">
+                    <div>
+                        <div class="tl-role">SDE-2 Software Engineer</div>
+                        <div class="tl-company">MathWorks &mdash; Instrument Control Toolbox</div>
+                    </div>
+                    <span class="tl-date">May 2025 &ndash; Present</span>
+                </div>
+                <ul class="tl-desc">
+                    <li>Promoted to <strong>SDE-2</strong> for sustained high-impact contributions to the ICT team.</li>
+                    <li>Taking on greater responsibility &mdash; architecting scalable solutions, mentoring team members, and driving product direction for hardware-software integration in MATLAB.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                <div class="tl-header">
+                    <div>
+                        <div class="tl-role">Associate Software Engineer</div>
+                        <div class="tl-company">MathWorks &mdash; Instrument Control Toolbox</div>
+                    </div>
+                    <span class="tl-date">Aug 2022 &ndash; May 2025</span>
+                </div>
+                <ul class="tl-desc">
+                    <li>Core developer on the <strong>Instrument Control Toolbox</strong>, delivering scalable and performant solutions for hardware-software integration.</li>
+                    <li>Built the <strong>Instrument Explorer App</strong> from scratch using the MVC design pattern, supporting IVIDEV and ICDEVICE APIs.</li>
+                    <li>Reduced technical debt by removing property and function cyclic dependencies, improving code maintainability.</li>
+                    <li>Enhanced <strong>visadevlist API</strong> performance with new Name-Value pair options.</li>
+                    <li>Resolved a major company-wide <strong>reentrancy protection</strong> issue affecting function reliability under interrupts.</li>
+                    <li>Applied OOP, pub-sub architecture, and modular code design for extensibility.</li>
+                    <li>Supported diverse customer issues in <strong>EDG</strong> spanning Polyspace, networking, and base MATLAB.</li>
+                </ul>
+                <div class="tl-techs">
+                    <span class="tl-tech">C++</span>
+                    <span class="tl-tech">MATLAB</span>
+                    <span class="tl-tech">TCP/IP</span>
+                    <span class="tl-tech">UDP</span>
+                    <span class="tl-tech">VISA</span>
+                    <span class="tl-tech">MVC</span>
+                    <span class="tl-tech">Pub-Sub</span>
+                    <span class="tl-tech">Simulink</span>
+                </div>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                <div class="tl-header">
+                    <div>
+                        <div class="tl-role">Engineering Development Group (EDG)</div>
+                        <div class="tl-company">MathWorks</div>
+                    </div>
+                    <span class="tl-date">Feb 2022 &ndash; Jul 2022</span>
+                </div>
+                <ul class="tl-desc">
+                    <li>Worked on <strong>Motor Control Blockset</strong> and built an algorithm to automate testing between host-target setup.</li>
+                    <li>Gained foundational experience across MathWorks product lines.</li>
+                </ul>
+                <div class="tl-techs">
+                    <span class="tl-tech">MATLAB</span>
+                    <span class="tl-tech">Simulink</span>
+                    <span class="tl-tech">Test Automation</span>
+                </div>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                <div class="tl-header">
+                    <div>
+                        <div class="tl-role">Content Writer</div>
+                        <div class="tl-company">UPAY &mdash; Underprivileged Advancement by Youth</div>
+                    </div>
+                    <span class="tl-date">May 2021 &ndash; Jul 2021</span>
+                </div>
+                <ul class="tl-desc">
+                    <li>Volunteered as a content writer, contributing to educational and awareness campaigns.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Skills ── -->
+<section id="skills" class="reveal">
+    <span class="section-tag">// skills</span>
+    <h2 class="section-title">Technical <span>Skills</span></h2>
+    <p class="section-sub">A versatile skill set spanning languages, frameworks, hardware, and engineering principles.</p>
+    <div class="skills-grid">
+        <div class="skill-category cat-lang">
+            <div class="skill-cat-header">
+                <div class="skill-cat-icon"><i class="fas fa-code"></i></div>
+                <div class="skill-cat-name">Languages &amp; Programming</div>
+            </div>
+            <div class="skill-tags">
+                <span class="skill-tag">C++</span>
+                <span class="skill-tag">C</span>
+                <span class="skill-tag">MATLAB</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">HTML</span>
+                <span class="skill-tag">CSS</span>
+                <span class="skill-tag">DSA</span>
+            </div>
+        </div>
+        <div class="skill-category cat-tools">
+            <div class="skill-cat-header">
+                <div class="skill-cat-icon"><i class="fas fa-tools"></i></div>
+                <div class="skill-cat-name">Tools &amp; Platforms</div>
+            </div>
+            <div class="skill-tags">
+                <span class="skill-tag">MATLAB</span>
+                <span class="skill-tag">Simulink</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">GenAI Tools</span>
+                <span class="skill-tag">MATLAB AI Toolbox</span>
+                <span class="skill-tag">Polyspace</span>
+                <span class="skill-tag">OpenCV</span>
+            </div>
+        </div>
+        <div class="skill-category cat-hw">
+            <div class="skill-cat-header">
+                <div class="skill-cat-icon"><i class="fas fa-microchip"></i></div>
+                <div class="skill-cat-name">Hardware &amp; Embedded</div>
+            </div>
+            <div class="skill-tags">
+                <span class="skill-tag">Arduino</span>
+                <span class="skill-tag">Raspberry Pi</span>
+                <span class="skill-tag">Oscilloscope</span>
+                <span class="skill-tag">Function Generators</span>
+                <span class="skill-tag">8051 Microcontroller</span>
+                <span class="skill-tag">BOLT IoT</span>
+                <span class="skill-tag">PCB Design</span>
+                <span class="skill-tag">VLSI</span>
+            </div>
+        </div>
+        <div class="skill-category cat-net">
+            <div class="skill-cat-header">
+                <div class="skill-cat-icon"><i class="fas fa-network-wired"></i></div>
+                <div class="skill-cat-name">Networking &amp; Protocols</div>
+            </div>
+            <div class="skill-tags">
+                <span class="skill-tag">TCP/IP</span>
+                <span class="skill-tag">UDP</span>
+                <span class="skill-tag">VISA</span>
+                <span class="skill-tag">Serial</span>
+                <span class="skill-tag">Multi-threading</span>
+            </div>
+        </div>
+        <div class="skill-category cat-princ">
+            <div class="skill-cat-header">
+                <div class="skill-cat-icon"><i class="fas fa-drafting-compass"></i></div>
+                <div class="skill-cat-name">Principles &amp; Architecture</div>
+            </div>
+            <div class="skill-tags">
+                <span class="skill-tag">OOP</span>
+                <span class="skill-tag">SOLID</span>
+                <span class="skill-tag">Design Patterns</span>
+                <span class="skill-tag">MVC</span>
+                <span class="skill-tag">Pub-Sub</span>
+                <span class="skill-tag">Modular Design</span>
+            </div>
+        </div>
+        <div class="skill-category cat-soft">
+            <div class="skill-cat-header">
+                <div class="skill-cat-icon"><i class="fas fa-users"></i></div>
+                <div class="skill-cat-name">Soft Skills</div>
+            </div>
+            <div class="skill-tags">
+                <span class="skill-tag">Leadership</span>
+                <span class="skill-tag">Public Speaking</span>
+                <span class="skill-tag">Resourcefulness</span>
+                <span class="skill-tag">Grit</span>
+                <span class="skill-tag">Team Building</span>
+                <span class="skill-tag">Mentoring</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Projects ── -->
+<section id="projects" class="reveal">
+    <span class="section-tag">// projects</span>
+    <h2 class="section-title">Featured <span>Projects</span></h2>
+    <p class="section-sub">A selection of impactful projects showcasing my engineering abilities.</p>
+    <div class="projects-grid">
+        <div class="project-card">
+            <div class="project-icon"><i class="fas fa-desktop"></i></div>
+            <h3>Instrument Explorer App</h3>
+            <p>Designed and developed a feature-rich Instrument Explorer App from scratch using the MVC design pattern in MATLAB. Enables intuitive instrument communication by integrating IVIDEV and ICDEVICE driver APIs.</p>
+            <div class="project-techs">
+                <span class="project-tech">MATLAB</span>
+                <span class="project-tech">MVC Pattern</span>
+                <span class="project-tech">IVIDEV</span>
+                <span class="project-tech">ICDEVICE</span>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-icon"><i class="fas fa-bolt"></i></div>
+            <h3>API Performance Optimization</h3>
+            <p>Improved the performance of the visadevlist API by introducing new customer-facing Name-Value pair options. Enhancements led to significantly faster execution and better user experience.</p>
+            <div class="project-techs">
+                <span class="project-tech">MATLAB</span>
+                <span class="project-tech">API Design</span>
+                <span class="project-tech">C++</span>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-icon"><i class="fas fa-robot"></i></div>
+            <h3>GenAI: Images to Simulink Models</h3>
+            <p>Created a cutting-edge GenAI tool that converts static images into dynamic Simulink models, accelerating model-based design workflows. Won 1st Place at MathWorks Internal Hackathon.</p>
+            <div class="project-techs">
+                <span class="project-tech">GenAI</span>
+                <span class="project-tech">Simulink</span>
+                <span class="project-tech">MATLAB</span>
+                <span class="project-tech">AI/ML</span>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-icon"><i class="fas fa-door-open"></i></div>
+            <h3>Smart Door Unlock &mdash; Raspberry Pi</h3>
+            <p>Built a smart door unlocking system using Raspberry Pi and OpenCV. Created a dataset of authorized faces &mdash; unauthorized faces trigger a buzzer while authorized ones unlock the door.</p>
+            <div class="project-techs">
+                <span class="project-tech">Raspberry Pi</span>
+                <span class="project-tech">OpenCV</span>
+                <span class="project-tech">Python</span>
+                <span class="project-tech">Face Recognition</span>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-icon"><i class="fas fa-home"></i></div>
+            <h3>Home Automation &mdash; BOLT IoT</h3>
+            <p>Built a home automation and security system using BOLT IoT integrated with mobile. Enables remote operation of electronic devices and alerts when room lights are switched on.</p>
+            <div class="project-techs">
+                <span class="project-tech">BOLT IoT</span>
+                <span class="project-tech">Mobile Integration</span>
+                <span class="project-tech">IoT</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Achievements ── -->
+<section id="achievements" class="reveal">
+    <span class="section-tag">// achievements</span>
+    <h2 class="section-title">Awards &amp; <span>Achievements</span></h2>
+    <p class="section-sub">Recognition for excellence, innovation, and impact.</p>
+    <div class="achievements-grid">
+        <div class="achievement-card">
+            <div class="trophy">&#127942;</div>
+            <h3>Most Productive Employee of the Year</h3>
+            <div class="org">MathWorks</div>
+            <p>Awarded outstanding performance rating for consistently delivering high-impact software solutions and exceeding development milestones.</p>
+        </div>
+        <div class="achievement-card">
+            <div class="trophy">&#129351;</div>
+            <h3>1st Place &mdash; Internal Hackathon</h3>
+            <div class="org">MathWorks</div>
+            <p>Won for creating a cutting-edge GenAI tool that converts static images into dynamic Simulink models, accelerating model-based design workflows.</p>
+        </div>
+        <div class="achievement-card">
+            <div class="trophy">&#129353;</div>
+            <h3>3rd Place &mdash; National Electronics Challenge</h3>
+            <div class="org">Abekus</div>
+            <p>Showcased advanced circuit design skills and real-time debugging capabilities in a national-level electronics competition.</p>
+        </div>
+        <div class="achievement-card">
+            <div class="trophy">&#129495;</div>
+            <h3>Finalist &mdash; Karnataka Got Talent</h3>
+            <div class="org">SSJYM Committee</div>
+            <p>Performed advanced yoga on stage and was selected as one of the finalists in this prestigious state-level talent competition.</p>
+        </div>
+        <div class="achievement-card">
+            <div class="trophy">&#127807;</div>
+            <h3>1st Place &mdash; E-Waste for Sustainability</h3>
+            <div class="org">Phase Shift 2019 &mdash; BMS College</div>
+            <p>Proposed eco-friendly electronics reuse ideas, creating useful circuits from electronic waste.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── Beyond Code ── -->
+<section id="beyond" class="reveal">
+    <span class="section-tag">// beyond code</span>
+    <h2 class="section-title">Life Beyond <span>Code</span></h2>
+    <p class="section-sub">Engineering is my profession &mdash; but my passions extend far beyond the keyboard.</p>
+    <div class="hobbies-grid">
+        <div class="hobby-card">
+            <div class="hobby-icon">&#129495;</div>
+            <h3>Yoga &mdash; Advanced Practitioner &amp; Instructor</h3>
+            <p>
+                A dedicated yoga practitioner at an advanced level and a <strong>certified YTT Level 2 Instructor</strong>.
+                I run my own Instagram page <strong>@Soulstretch_by_apeksha</strong> where I share yoga flows, tips, and wellness content.
+                I was a <strong>finalist at Karnataka Got Talent</strong> organized by the SSJYM Committee, where I performed yoga on stage.
+            </p>
+            <a href="https://www.instagram.com/soulstretch_by_apeksha" target="_blank" class="hobby-link">
+                <i class="fab fa-instagram"></i> @Soulstretch_by_apeksha <i class="fas fa-arrow-right" style="font-size:.7rem;"></i>
+            </a>
+            <div class="hobby-highlights">
+                <span class="hobby-highlight">YTT Level 2 Certified</span>
+                <span class="hobby-highlight">Karnataka Got Talent Finalist</span>
+                <span class="hobby-highlight">Instagram Instructor</span>
+            </div>
+        </div>
+        <div class="hobby-card">
+            <div class="hobby-icon">&#127939;</div>
+            <h3>Marathon Running</h3>
+            <p>
+                An avid marathon runner who loves pushing personal limits. Completed <strong>3 races at 5K</strong> and
+                <strong>2 races at 10K</strong> distance. Most recently ran the <strong>TCS 10K Bengaluru 2026</strong>.
+            </p>
+            <div class="hobby-highlights">
+                <span class="hobby-highlight">3x 5K Finisher</span>
+                <span class="hobby-highlight">2x 10K Finisher</span>
+                <span class="hobby-highlight">TCS 10K Bengaluru 2026</span>
+            </div>
+        </div>
+        <div class="hobby-card">
+            <div class="hobby-icon">&#9968;</div>
+            <h3>Trekking &amp; Adventure</h3>
+            <p>
+                Passionate about exploring nature through treks. Whether it's Western Ghats trails or mountain
+                hikes, I find clarity and inspiration in the great outdoors.
+            </p>
+            <div class="hobby-highlights">
+                <span class="hobby-highlight">Nature Lover</span>
+                <span class="hobby-highlight">Adventure Trekker</span>
+            </div>
+        </div>
+        <div class="hobby-card">
+            <div class="hobby-icon">&#127926;</div>
+            <h3>Devotional Singing</h3>
+            <p>
+                A devout religious singer who regularly performs at <strong>Jain temples</strong>. Singing devotional hymns
+                is a deeply personal practice that brings peace, community connection, and spiritual fulfillment.
+            </p>
+            <div class="hobby-highlights">
+                <span class="hobby-highlight">Jain Temple Singer</span>
+                <span class="hobby-highlight">Devotional Music</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Education ── -->
+<section id="education" class="reveal">
+    <span class="section-tag">// education</span>
+    <h2 class="section-title">My <span>Education</span></h2>
+    <div class="edu-card">
+        <div class="edu-icon"><i class="fas fa-university"></i></div>
+        <div class="edu-info">
+            <h3>B.M.S. College of Engineering</h3>
+            <div class="degree">Bachelor of Engineering &mdash; Electronics &amp; Telecommunication</div>
+            <div class="edu-meta">2018 &ndash; 2022 &nbsp;|&nbsp; Bangalore, Karnataka</div>
+            <div class="edu-meta" style="margin-top:.4rem; color: var(--text);">
+                Part of the NSS team. Active Throwball player &mdash; won many inter and intra college sports meets.
+            </div>
+        </div>
+        <div class="edu-gpa">
+            9.3
+            <small>CGPA</small>
+        </div>
+    </div>
+    <div class="edu-activities" style="margin-top: 2rem;">
+        <h4>Relevant Coursework</h4>
+        <div class="coursework-tags">
+            <span class="cw-tag">Digital &amp; Analog Electronics</span>
+            <span class="cw-tag">Communication Systems</span>
+            <span class="cw-tag">Computer Networks</span>
+            <span class="cw-tag">Operating Systems</span>
+            <span class="cw-tag">Signal Processing</span>
+        </div>
+    </div>
+</section>
+
+<!-- ── Certifications ── -->
+<section class="reveal">
+    <span class="section-tag">// certifications</span>
+    <h2 class="section-title">Certifications</h2>
+    <div class="cert-list" style="margin-top:1.5rem;">
+        <div class="cert-card">
+            <div class="cert-badge"><i class="fas fa-certificate"></i></div>
+            <div>
+                <div class="cert-name">HackerRank Problem Solving</div>
+                <div class="cert-issuer">HackerRank &nbsp;&bull;&nbsp; Feb 2021</div>
+            </div>
+        </div>
+        <div class="cert-card">
+            <div class="cert-badge"><i class="fas fa-certificate"></i></div>
+            <div>
+                <div class="cert-name">Debug You Lockdown Hack</div>
+                <div class="cert-issuer">Indian Society for Technical Education &nbsp;&bull;&nbsp; May 2020</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Contact ── -->
+<section id="contact" class="reveal">
+    <span class="section-tag">// contact</span>
+    <h2 class="section-title">Let's <span>Connect</span></h2>
+    <p class="section-sub">I'm always open to discussing new opportunities, ideas, or collaborations.</p>
+    <div class="contact-grid">
+        <a href="mailto:jainapeksha588@gmail.com" class="contact-card">
+            <i class="fas fa-envelope"></i>
+            <h3>Email</h3>
+            <p>jainapeksha588@gmail.com</p>
+        </a>
+        <a href="https://www.linkedin.com/in/apeksha-jain-bagrecha" target="_blank" class="contact-card">
+            <i class="fab fa-linkedin"></i>
+            <h3>LinkedIn</h3>
+            <p>Apeksha Jain Bagrecha</p>
+        </a>
+        <a href="tel:+918296824016" class="contact-card">
+            <i class="fas fa-phone"></i>
+            <h3>Phone</h3>
+            <p>+91 8296824016</p>
+        </a>
+        <a href="https://www.instagram.com/soulstretch_by_apeksha" target="_blank" class="contact-card">
+            <i class="fab fa-instagram"></i>
+            <h3>Instagram</h3>
+            <p>@Soulstretch_by_apeksha</p>
+        </a>
+        <a class="contact-card" style="cursor:default;">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Location</h3>
+            <p>Bengaluru, Karnataka, India</p>
+        </a>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 <span>Apeksha Bagrecha</span>. All rights reserved.</p>
+</footer>
+
+<script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open'));
+    });
+</script>
+</body>
+</html>
